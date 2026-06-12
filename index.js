@@ -9,24 +9,7 @@ const adminRoutes   = require("./routes/admin");
 
 const app = express();
 
-const ALLOWED_ORIGINS = [
-  "http://localhost:5173",
-  "http://localhost:4173",
-  "https://rupeetrack-frontend.vercel.app",
-  "https://rupeetrack.vercel.app",  // ← update with your actual Vercel URL
-];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || ALLOWED_ORIGINS.some(o => origin.startsWith(o))) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
+app.use(cors());
 
 app.use(express.json());
 
