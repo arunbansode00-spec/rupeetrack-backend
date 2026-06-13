@@ -9,24 +9,7 @@ const adminRoutes   = require("./routes/admin");
 
 const app = express();
 
-const ALLOWED_ORIGINS = [
-  "http://localhost:5173",
-  "http://localhost:4173",
-  "https://rupeetrack-frontend-ne96qpzc-arunbansode00-specs-projects.vercel.app",
-];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || ALLOWED_ORIGINS.some(o => origin.startsWith(o))) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
-
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => res.json({ status: "RupeeTrack API running ✅" }));
@@ -38,7 +21,6 @@ app.use("/api/admin",    adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 
-// Keep-alive ping every 14 minutes so Render doesn't sleep
 if (process.env.NODE_ENV === "production") {
   const https = require("https");
   setInterval(() => {
